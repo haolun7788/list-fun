@@ -1,0 +1,12 @@
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+
+import SortingPractice from './pages/template.tsx'
+import Dashboard from './pages/dashboard.tsx'
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <Dashboard />
+  </StrictMode>,
+)
