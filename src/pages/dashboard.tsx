@@ -8,7 +8,7 @@ function Dashboard() {
     const [arraySize, setArraySize] = useState(10);
     const [problemStarted, setProblemStarted] = useState(false);
     const [unsortedList, setUnsortedList] = useState<number[]>([]);
-    const [selectedLanguage, setSelectedLanguage] = useState('java');
+    const [selectedLanguage, setSelectedLanguage] = useState('python');
     const [code, setCode] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [result, setResult] = useState(false);
@@ -76,6 +76,25 @@ func sortArray(arr []int) []int {
         csharp: 'csharp',
     };
 
+    const usList = () => {
+        if (!problemStarted) {
+            return <p></p>;
+        } else {
+            return <p>Unsorted List: {unsortedList.join(', ')}</p>;
+        }          
+    }
+
+    const langWarning = () => { 
+        if (selectedLanguage !== 'Python') {
+            return <p style={{ fontSize: '140%', fontWeight: 'bold' }}>
+                    <span style={{ color: 'red' }}>WARNING:</span>{' '}
+                    Only python is supported for now.
+                    </p>
+        } else {
+            return null;
+        }
+    }
+
     useEffect(() => {
         setCode(languageTemplates[selectedLanguage as keyof typeof languageTemplates]);
     }, [selectedLanguage]);
@@ -131,29 +150,27 @@ func sortArray(arr []int) []int {
         <>
             <div className="dashboard-container">
                 <label>
-                    Min Value:
-                    <input type="number" value={minValue} onChange={(e) => setMinValue(Number(e.target.value))} />
+                    Miniimum value: <input type="number" value={minValue} onChange={(e) => setMinValue(Number(e.target.value))} />
                 </label>
                 <label>
-                    Max Value:
-                    <input type="number" value={maxValue} onChange={(e) => setMaxValue(Number(e.target.value))} />
+                    Maximum value: <input type="number" value={maxValue} onChange={(e) => setMaxValue(Number(e.target.value))} />
                 </label>
                 <label>
-                    Array Size:
-                    <input type="range" min="2" max="100" value={arraySize} onChange={(e) => setArraySize(Number(e.target.value))} />
-                    <p>{arraySize}</p>
+                    Array size: <input type="range" min="2" max="100" value={arraySize} onChange={(e) => setArraySize(Number(e.target.value))} /> {arraySize}
                 </label>
+                <p></p>
                 <label>
-                    Programming Language:
+                    Programming language:
                     <select value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)}>
-                        <option value="java">Java</option>
-                        <option value="python">Python</option>
-                        <option value="javascript">JavaScript</option>
-                        <option value="csharp">C#</option>
-                        <option value="cpp">C++</option>
-                        <option value="go">Go</option>
+                        <option value="Python">Python</option>
+                        <option value="Java">Java</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="CSharp">C#</option>
+                        <option value="Cpp">C++</option>
+                        <option value="Go">Go</option>
                     </select>
-                    <p>Selected: {selectedLanguage}</p>
+                    <p>Selected language: {selectedLanguage}</p>
+                    {langWarning()}
                 </label>
                 <button 
                     onClick={handleStart}
@@ -161,7 +178,7 @@ func sortArray(arr []int) []int {
                         Start
                 </button>
                 <div>
-                    <p>Unsorted List: {unsortedList.join(', ')}</p>
+                    {usList()}
                 </div>
                 <Editor
                     height="500px"
