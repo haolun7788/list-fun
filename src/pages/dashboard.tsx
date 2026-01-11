@@ -1,6 +1,6 @@
-import { Sliders } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Editor from '@monaco-editor/react'
+import '../app.css'
 
 function Dashboard() {
     const [minValue, setMinValue] = useState(-100);
@@ -14,6 +14,8 @@ function Dashboard() {
     const [result, setResult] = useState(false);
     const [executionTime, setExecutionTime] = useState(null);
     const [currentSubmission, setCurrentSubmission] = useState<number[] | null>(null);
+    isSubmitting
+    problemStarted
 
     const generateUnsortedList = () => {
         const list = [];
